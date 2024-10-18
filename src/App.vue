@@ -9,5 +9,5 @@ export default {
   </main>
 </template>
 <style lang="scss">
-@import './styles/app.scss';
+@import './styles/generals.scss';
 </style>
