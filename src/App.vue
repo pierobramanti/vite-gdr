@@ -4,7 +4,7 @@ export default {
 }
 </script>
 <template>
-  <main class="py-5">
+  <main class="h-100">
     <router-view></router-view>
   </main>
 </template>
