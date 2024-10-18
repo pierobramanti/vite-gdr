@@ -5,7 +5,7 @@ export default {
 </script>
 <template>
     <div class="bg-primary">
-        
+        prova
     </div>
 </template>
 <style lang="scss">
