@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import PageHome from "./pages/PageHome.vue";
 import PageCharacterSelect from "./pages/PageCharacterSelect.vue";
-import PageConfirmChoises from "./pages/PageConfirmChoises.vue";
+import PageConfirmChoices from "./pages/PageConfirmChoices.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -18,9 +18,9 @@ const router = createRouter({
             component: PageCharacterSelect
         },
         {
-            path: '/confirm-choises/:slug',
-            name: 'confirmChoises',
-            component: PageConfirmChoises
+            path: '/confirm-choices/:slug',
+            name: 'confirmChoices',
+            component: PageConfirmChoices
         }
     ]
 })

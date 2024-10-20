@@ -22,7 +22,7 @@ export default {
         closeModal() {
             //reset character + nascondi modale
             this.visibleModal = false
-            // this.selectedCharacter = null
+            this.selectedCharacter = null //forse non mi serve
         }
     }
 }
@@ -40,7 +40,7 @@ export default {
                 <h5>Classe: {{character.type.name}}</h5>
                 <div class="d-flex justify-content-center mb-2 mt-3">
                     <button class="btn btn-warning me-3" @click="openModal">Dettagli</button>
-                    <router-link :to="{name: 'confirmChoises', params: { slug: character.slug } }" class="btn btn-primary">Scelgo te!</router-link>
+                    <router-link :to="{name: 'confirmChoices', params: { slug: character.slug } }" class="btn btn-primary">Scelgo te!</router-link>
                 </div>
             </div>
         </div>
