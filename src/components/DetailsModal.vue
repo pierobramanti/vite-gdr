@@ -49,6 +49,7 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
+@import '../styles/generals.scss';
 .modal-overlay {
     position: fixed;
     top: 0;
