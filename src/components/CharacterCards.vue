@@ -1,8 +1,29 @@
 <script>
-import {store} from '../store.js'
+import DetailsModal from '../components/DetailsModal.vue';
 export default {
+    components: {
+        DetailsModal
+    },
     props: {
         character: Object
+    },
+    data() {
+        return {
+            visibleModal: false,
+            selectedCharacter: null
+        }
+    },
+    methods: {
+        openModal() {
+            // character selezionato + mostra modale
+            this.visibleModal = true
+            this.selectedCharacter = this.character
+        },
+        closeModal() {
+            //reset character + nascondi modale
+            this.visibleModal = false
+            // this.selectedCharacter = null
+        }
     }
 }
 </script>
@@ -16,21 +37,23 @@ export default {
                 <h3 class="card-title">
                     {{ character.name }}
                 </h3>
-                <h6>Tipo: {{character.type.name}}</h6>
-                <p class="card-text" v-if="character.description">{{character.description}}</p>
-                <p class="card-text" v-else>Nessuna descrizione presente</p>
-                <h5 class="text-end">Statistiche:</h5>
-                <ul class="list-unstyled text-end">
-                    <li>Forza: {{ character.strength }} </li>
-                    <li>Difesa: {{ character.defence }} </li>
-                    <li>Destrezza: {{ character.speed }} </li>
-                    <li>Intelligenza: {{ character.intelligence }} </li>
-                    <li>HP max: {{ character.life }} </li>
-                </ul>
+                <h5>Classe: {{character.type.name}}</h5>
+                <div class="d-flex justify-content-center mt-3 mb-2">
+                    <button class="btn btn-primary mx-auto" @click="openModal">Dettagli</button>
+                </div>
             </div>
         </div>
+        <DetailsModal v-if="visibleModal" :character="selectedCharacter" @closeModal="closeModal"/>
     </div>
+
 </template>
 <style lang="scss" scoped>
 @import '../styles/generals.scss';
+.card {
+    min-height: 300px;
+
+    .background-images {
+        background-color: #e0e0e7;
+    }
+}
 </style>
