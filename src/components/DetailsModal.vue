@@ -68,7 +68,6 @@ export default {
         width: 100%;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         padding: 30px;
-        animation: scaleIn 0.3s ease-out;
         .custom-modal-header {
             display: flex;
             justify-content: space-between;
@@ -89,7 +88,6 @@ export default {
                 }
             }
         }
-        
         .custom-modal-footer {
             display: flex;
             justify-content: flex-end;
@@ -98,21 +96,13 @@ export default {
     }
 }
 
-
-
-.btn-close {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
+//animation
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-    from { transform: scale(0.8); }
-    to { transform: scale(1); }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 </style>
