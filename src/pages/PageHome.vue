@@ -1,6 +1,22 @@
 <script>
+import { store } from '../store';
+
 export default {
-    
+    data() {
+        return {
+            playerName: '',
+            store
+        }
+    },
+    methods: {
+        saveName() {
+            if(this.playerName) {
+                localStorage.setItem('playerName', this.playerName)
+                store.playerName = this.playerName
+                this.$router.push({name: 'characters'})
+            }
+        }
+    }
 }
 </script>
 <template>
@@ -10,15 +26,15 @@ export default {
                 <div class="col-12">
                     <div class="d-flex justify-content-center flex-column align-items-center">
                         <h1>Titolo gioco</h1>
-                        <form action="POST">
+                        <form action="POST" @submit.prevent="saveName">
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="" class="form-label">Inserisci il tuo nome, viandante</label>
-                                    <input class="form-control" type="text" id="" placeholder="Il tuo nome">
+                                    <label for="player" class="form-label">Inserite il Vostro nome, viandante</label>
+                                    <input class="form-control" type="text" id="player" name="player" v-model="playerName" placeholder="Il tuo nome">
                                 </div>
                             </div>
                         </form>
-                        <router-link :to="{name: 'characters' }">Inizia</router-link>
+                        <router-link :to="{name: 'characters' }" @click="saveName">Inizia</router-link>
                     </div>
                 </div>
             </div>
