@@ -9,6 +9,10 @@ export default {
         }
     },
     created() {
+        const playerName = localStorage.getItem('playerName')
+        if(playerName) {
+            this.store.playerName = playerName
+        }
         this.getCharacters()
     },
     methods: {
@@ -27,11 +31,14 @@ export default {
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Seleziona il tuo personaggio</h1>
+                <div class="text-center my-5">
+                    <h1>Ave, {{store.playerName}}!</h1>
+                    <h2>Selezionate il Vostro combattente</h2>
+                </div>
             </div>
         </div>
         <div class="row gy-3">
-            <div class="col-12 col-md-4" v-for="character in characters" :key="character.id">
+            <div class="col-6 col-md-4" v-for="character in characters" :key="character.id">
                 <div class="card">
                     <div v-if="character.type.image" class="background-images">
                         <img :src="character.type.image" class="card-img-top p-3" :alt="`${character.type.name} class`">
@@ -57,6 +64,6 @@ export default {
         </div>
     </div>
 </template>
-<style lang="">
-    
+<style lang="scss" scoped>
+    @import '../styles/generals.scss';
 </style>
