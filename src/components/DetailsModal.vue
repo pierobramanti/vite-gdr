@@ -43,7 +43,7 @@ export default {
             </div>
             <div class="custom-modal-footer">
                 <button type="button" class="btn btn-secondary me-3" @click="closeModal">Indietro</button>
-                <button type="button" class="btn btn-primary" @click="selectCharacter">Scelgo te!</button>
+                <router-link :to="{name: 'confirmChoises', params: { slug: character.slug } }" type="button" class="btn btn-primary" @click="selectCharacter">Scelgo te!</router-link>
             </div>
         </div>
     </div>

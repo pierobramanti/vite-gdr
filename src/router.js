@@ -18,8 +18,8 @@ const router = createRouter({
             component: PageCharacterSelect
         },
         {
-            path: '/confirm-choises',
-            name: 'confirm-choises',
+            path: '/confirm-choises/:slug',
+            name: 'confirmChoises',
             component: PageConfirmChoises
         }
     ]

@@ -38,8 +38,9 @@ export default {
                     {{ character.name }}
                 </h3>
                 <h5>Classe: {{character.type.name}}</h5>
-                <div class="d-flex justify-content-center mt-3 mb-2">
-                    <button class="btn btn-primary mx-auto" @click="openModal">Dettagli</button>
+                <div class="d-flex justify-content-center mb-2 mt-3">
+                    <button class="btn btn-warning me-3" @click="openModal">Dettagli</button>
+                    <router-link :to="{name: 'confirmChoises', params: { slug: character.slug } }" class="btn btn-primary">Scelgo te!</router-link>
                 </div>
             </div>
         </div>
