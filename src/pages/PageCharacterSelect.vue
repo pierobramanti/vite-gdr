@@ -9,7 +9,10 @@ export default {
     data() {
         return {
             store,
-            characters: []
+            characters: [],
+            current_page: null,
+            last_page: null,
+            first_page: 1
         }
     },
     created() {
@@ -22,9 +25,17 @@ export default {
     methods: {
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
-                this.characters = res.data.results
+                this.characters = res.data.results.data
+                this.current_page = res.data.results.current_page
+                this.last_page = res.data.results.last_page
             }).catch((error) => {
                 console.error('Errore recupero', error)
+            })
+        },
+        changePage(p) {
+            this.current_page = p
+            axios.get(`${store.url}${store.urlCharacters}`, {params: { page: p}}).then((res) => {
+                this.characters = res.data.results.data
             })
         }
     }
@@ -43,29 +54,15 @@ export default {
         </div>
         <div class="row gy-3 py-5">
             <CharacterCards v-for="character in characters" :key="character.id" :character="character"/>
-            <!-- <div class="col-6 col-md-4" v-for="character in characters" :key="character.id">
-                <div class="card">
-                    <div v-if="character.type.image" class="background-images">
-                        <img :src="character.type.image" class="card-img-top p-3" :alt="`${character.type.name} class`">
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">
-                            {{ character.name }}
-                        </h3>
-                        <h6>Tipo: {{character.type.name}}</h6>
-                        <p class="card-text" v-if="character.description">{{character.description}}</p>
-                        <p class="card-text" v-else>Nessuna descrizione presente</p>
-                        <h5 class="text-end">Statistiche:</h5>
-                        <ul class="list-unstyled text-end">
-                            <li>Forza: {{ character.strength }} </li>
-                            <li>Difesa: {{ character.defence }} </li>
-                            <li>Destrezza: {{ character.speed }} </li>
-                            <li>Intelligenza: {{ character.intelligence }} </li>
-                            <li>HP max: {{ character.life }} </li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
+        </div>
+        <div class="col-12">
+            <nav aria-label="Page navigation" class="d-flex justify-content-center my-3">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" :class="current_page == first_page ? 'disabled' : ''" href="#" @click="changePage(current_page - 1)" aria-label="Previous">Mi volgo indietro</a></li>
+                  <li class="page-item" v-for="page in last_page"><a class="page-link" href="#" @click="changePage(page)">{{page}}</a></li>
+                  <li class="page-item"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="changePage(current_page + 1)" aria-label="Next">Vado oltre</a></li>
+                </ul>
+              </nav>
         </div>
     </div>
 </template>
