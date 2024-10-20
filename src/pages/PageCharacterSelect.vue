@@ -1,7 +1,11 @@
 <script>
+import CharacterCards from '../components/CharacterCards.vue';
 import axios from 'axios';
 import {store} from '../store.js'
 export default {
+    components: {
+        CharacterCards
+    },
     data() {
         return {
             store,
@@ -12,19 +16,19 @@ export default {
         const playerName = localStorage.getItem('playerName')
         if(playerName) {
             this.store.playerName = playerName
+            this.getCharacters()
         }
-        this.getCharacters()
     },
     methods: {
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
-                console.log(res.data.results)
                 this.characters = res.data.results
             }).catch((error) => {
                 console.error('Errore recupero', error)
             })
         }
     }
+   
 }
 </script>
 <template>
@@ -37,8 +41,9 @@ export default {
                 </div>
             </div>
         </div>
-        <div class="row gy-3">
-            <div class="col-6 col-md-4" v-for="character in characters" :key="character.id">
+        <div class="row gy-3 py-5">
+            <CharacterCards v-for="character in characters" :key="character.id" :character="character"/>
+            <!-- <div class="col-6 col-md-4" v-for="character in characters" :key="character.id">
                 <div class="card">
                     <div v-if="character.type.image" class="background-images">
                         <img :src="character.type.image" class="card-img-top p-3" :alt="`${character.type.name} class`">
@@ -60,7 +65,7 @@ export default {
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
