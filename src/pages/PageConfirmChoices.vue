@@ -41,6 +41,9 @@ export default {
         <div class="container">
             <div class="row">
                 <div id="overlay_effect" class="text-center">
+                    <div id="home_button">
+                        <router-link :to="{ name: 'homepage' }"><i class="bi bi-house-door-fill"></i></router-link>
+                    </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -74,6 +77,18 @@ export default {
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
         border-radius: 8px;
+        position: relative;
+
+        #home_button {
+            position: absolute;
+            top: 17px;
+            left: 29px;
+            font-size: 30px;
+            cursor: pointer;
+            a {
+                color: white;
+            }
+        }
 
         h1,
         h2,
