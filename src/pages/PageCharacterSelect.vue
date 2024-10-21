@@ -48,7 +48,7 @@ export default {
             <div id="home_button">
                 <router-link :to="{ name: 'homepage' }"><i class="bi bi-house-door-fill"></i></router-link>
             </div>
-            <div class="row">
+            <div class="row pt-5">
                 <div class="col-12">
                     <div class="text-center text-white">
                         <h1>Ave, <strong class="name_color">{{store.playerName}}</strong>!</h1>
@@ -92,6 +92,10 @@ export default {
             a {
                 color: white;
             }
+        }
+        h1,
+        h2 {
+            letter-spacing: 2px;
         }
         
         .name_color {

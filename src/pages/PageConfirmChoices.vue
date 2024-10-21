@@ -44,10 +44,10 @@ export default {
                     <div id="home_button">
                         <router-link :to="{ name: 'homepage' }"><i class="bi bi-house-door-fill"></i></router-link>
                     </div>
-                    <div class="container">
+                    <div class="container pt-5">
                         <div class="row">
                             <div class="col-12">
-                                <h1 class="pb-4">All'attenzione dell'eroe <strong class="name_color">{{store.playerName}}!</strong></h1>
+                                <h1 class="pb-4">All'attenzione dell'eroe <strong class="name_color">{{store.playerName}}!</strong></h1> <!-- vedere per trombette ai lati dell'h1 -->
                                 <h2 v-if="selectedCharacter">Avete scelto <strong class="name_color">{{selectedCharacter.name}}</strong> come campione,</h2>
                                 <h3>avete la certezza di voler proseguire?</h3>
                                 <!-- ancora da gestire -->
@@ -93,7 +93,7 @@ export default {
         h1,
         h2,
         h3 {
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .name_color {
