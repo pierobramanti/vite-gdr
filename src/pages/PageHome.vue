@@ -20,29 +20,83 @@ export default {
 }
 </script>
 <template>
-    <div class="wrapper d-flex justify-content-center align-items-center">
+    <div class="wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="d-flex justify-content-center flex-column align-items-center">
-                        <h1>Titolo gioco</h1>
+                <div id="overlay_effect" class="col-12 py-5 text-center">
+                    <p>RACCOON: THE GAME</p>
+
+                    <!-- 2° OPZIONE
+                    <div class="d-flex flex-column">
+                        <p class="m-0">RACCOON</p> -> eventuale 'text-white' solo qui
+                        <p class="m-0">THE GAME</p>
+                    </div> 
+                    -->
+
+                    <div class="d-flex justify-content-center align-items-center pb-4"> <!-- possibilità: rimuovere flex e gestire meglio la grandezza dell'overlay -->
                         <form action="POST" @submit.prevent="saveName">
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="player" class="form-label">Inserite il Vostro nome, viandante</label>
-                                    <input class="form-control" type="text" id="player" name="player" v-model="playerName" placeholder="Il tuo nome">
+                                    <label for="player" class="form-label">Inserite il Vostro nome, <strong class="name_color">viandante</strong></label>
+                                    <input class="form-control" type="text" id="player" name="player" v-model="playerName" placeholder="Il Vostro nome">
                                 </div>
                             </div>
                         </form>
-                        <router-link :to="{name: 'characters' }" @click="saveName">Inizia</router-link>
                     </div>
+                    <router-link :to="{name: 'characters' }" @click="saveName">Inizia</router-link>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <style lang="scss" scoped>
-    .wrapper {
-        height: 100vh;
+@import '../styles/generals.scss';
+
+.wrapper {
+    height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    #overlay_effect {
+        font-family: 'Dungeon', sans-serif;
+        padding: 30px;
+        background-color: rgba(226, 223, 217, 0.2);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-radius: 8px;
+
+        label,
+        input {
+            letter-spacing: 2px;
+            font-size: 30px;
+        }
+
+        .name_color {
+            color: $seal_brown;
+        }
+
+        p {
+            color: $seal-brown;
+            font-size: 66px;
+            font-weight: 700;
+            letter-spacing: 6px;
+        }
+
+        a {
+            text-decoration: none;
+            transition: all 0.5s;
+            font-size: 30px;
+            letter-spacing: 1px;
+            padding: 6px 0;
+            color: $blue-black;
+            border-bottom: 1px solid $blue-black;
+            &:hover {
+                padding: 6px;
+                border-bottom: 1px solid white;
+                color: white;
+            }
+        }
     }
+}
 </style>

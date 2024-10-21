@@ -29,7 +29,9 @@ $blue-black: #0e102d;
 
 body {
     height: 100vh;
-    background-color: palegoldenrod;
+    background-image: url('../../public/img/background/porta-medievale-new.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 main {

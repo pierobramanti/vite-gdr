@@ -29,7 +29,7 @@ export default {
 </script>
 
 <template>
-    <div class="col-6 col-md-4">
+    <div class="col-12 col-md-6 col-lg-4">
         <div class="card">
             <div v-if="character.type.image" class="background-images">
                 <img :src="character.type.image" class="card-img-top p-3" :alt="`${character.type.name} class`">
