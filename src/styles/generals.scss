@@ -1,4 +1,31 @@
 @import "node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/bootstrap-icons/font/bootstrap-icons.css';
+
+
+// font Dungeon
+@import url('https://fonts.cdnfonts.com/css/dungeon'); // font-family: 'Dungeon', sans-serif;
+// font Cinzel
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap'); // font-family: "Cinzel", serif;
+// Old London
+@import url('https://fonts.cdnfonts.com/css/old-london'); //font-family: 'Old London', sans-serif;
+// Roboto
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+// Colori chiari
+$acid-green: #afc044;
+$coffee: #cdbeac;
+
+// Colori medi
+$camouflage-green: #7b7d6a;
+$btns_hover: #c4b463;
+
+// Colori scuri
+$ebony: #4e554e;
+$espresso: #503c18;
+$seal-brown: #391d22;
+$black-pepper: #352f28;
+$blue-black: #0e102d;
+
 
 body {
     height: 100vh;
