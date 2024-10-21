@@ -58,9 +58,9 @@ export default {
         <div class="col-12">
             <nav aria-label="Page navigation" class="d-flex justify-content-center my-3">
                 <ul class="pagination">
-                  <li class="page-item"><a class="page-link" :class="current_page == first_page ? 'disabled' : ''" href="#" @click="changePage(current_page - 1)" aria-label="Previous">Mi volgo indietro</a></li>
-                  <li class="page-item" v-for="page in last_page"><a class="page-link" href="#" @click="changePage(page)">{{page}}</a></li>
-                  <li class="page-item"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="changePage(current_page + 1)" aria-label="Next">Vado oltre</a></li>
+                  <li class="page-item"><a class="page-link" :class="current_page == first_page ? 'disabled' : ''" href="#" @click="changePage(current_page - 1); $event.target.blur()" aria-label="Previous">Mi volgo indietro</a></li>
+                  <li class="page-item" v-for="page in last_page"><a class="page-link" href="#" @click="changePage(page); $event.target.blur()">{{page}}</a></li>
+                  <li class="page-item"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="changePage(current_page + 1); $event.target.blur()" aria-label="Next">Vado oltre</a></li>
                 </ul>
               </nav>
         </div>
