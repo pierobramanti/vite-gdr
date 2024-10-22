@@ -1,5 +1,19 @@
 <script>
+import { store } from '../store';
+import { randomEnemy, calculateDamageTaken, calculateDamage } from '../data/gameLogic';
 export default {
+    data() {
+        return {
+            store
+        }
+    },
+    created() {
+        console.log(store.playerCharacter)
+      
+    },
+    methods: {
+        
+    }
 }
 </script>
 
@@ -11,7 +25,7 @@ export default {
             <div class="col-12 p-5 text-center">
                 <div class="roundy">
                     <h1>
-                        E' il tuo turno, viandante
+                        E' il tuo turno, {{store.playerCharacter.name}}
                     </h1>
                 </div>
             </div>
@@ -21,8 +35,8 @@ export default {
     <div class="container-fluid">
         <div class="row">
             <div class="col-6">
-                <div class="char-spot d-flex mb-3 justify-content-center">
-                    <img src="../../public/img/character/bard.gif" alt="">
+                <div class="char-spot d-flex mb-3 justify-content-center" v-if="store.playerCharacter.type">
+                    <img :src="store.playerCharacter.type.image" alt="">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm p-3">
                         <div class="frame">

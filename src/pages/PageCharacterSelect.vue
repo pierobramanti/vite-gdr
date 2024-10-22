@@ -9,9 +9,9 @@ export default {
     data() {
         return {
             store,
-            characters: [],
             current_page: null,
             last_page: null,
+            characters: [],
             first_page: 1
         }
     },
@@ -26,6 +26,8 @@ export default {
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
                 this.characters = res.data.results.data
+                console.log(this.characters)
+                store.characters = res.data.results.data;
                 this.current_page = res.data.results.current_page
                 this.last_page = res.data.results.last_page
             }).catch((error) => {
