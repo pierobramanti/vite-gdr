@@ -36,11 +36,11 @@ export default {
         <div class="row">
             <div class="col-6">
                 <div class="char-spot d-flex mb-3 justify-content-center" v-if="store.playerCharacter.type">
-                    <img :src="store.playerCharacter.type.image" alt="">
+                    <img :src="store.playerCharacter.type.image" :alt="store.playerCharacter.name" class="pg-img">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm p-3">
                         <div class="frame">
-                            HP:100
+                            <p>HP: {{store.playerCharacter.life}}</p>
                         </div>
                     </div>
                 </div>
@@ -111,6 +111,9 @@ export default {
 
     .char-spot{
         position: relative;
+        .pg-img {
+            transform: scaleX(-1);
+        }
         .ui-g-wrapper-sm{
             background-color: #cdbeac;
             height: 100px;

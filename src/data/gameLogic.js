@@ -1,8 +1,3 @@
-/*
-1 pc character
- inizializziamo le statistiche del personaggio, portandoci l'intera tabella dei pg
- creiamo una funzione per l'attacco (usiamo come parametri attacco e difesa)
-*/
 // funzione personaggio random
 function randomEnemy(enemies) {
     const r = Math.floor(Math.random() * enemies.length)
