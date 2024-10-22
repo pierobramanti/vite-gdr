@@ -10,7 +10,9 @@ export default {
             selectedEnemy: {},
             playerTurn: '',
             turn: true, // true è il player, false è l'avversario
-            action: true //false (il bottone azioni non è cliccato)
+            action: true, //false (il bottone azioni non è cliccato)
+            showGameOver: false, //flag per visualizzare il messaggio di sconfitta
+            showWin: false, //flag per visualizzare il messaggio di vittoria
         }
     },
     created() {
@@ -30,8 +32,56 @@ export default {
         this.selectedEnemy = randomEnemy(this.enemies);
         console.log(this.selectedEnemy)
     },
-    attack(){
-        calculateDamage();
+    // TURNO NEMICO
+    enemyTurn() {
+        //funzione calcolo critico per nemico
+        const damage = calculateDamage(this.selectedEnemy)
+        // vita scende in base al valore di attacco
+        // calcolo danno che nemico mi da, in base alla mia difesa
+        const damageTaken = calculateDamageTaken(this.selectedEnemy, store.playerCharacter);
+        store.playerCharacter.life -= damageTaken
+
+        if(store.playerCharacter.life <= 0) {
+            //sconfitta se HP player è a zero
+            console.log('sei stato sconfitto')
+            // mostro schermata sconfitta
+            this.showGameOver = true;
+        } else {
+            // cambia turno
+            this.endTurn()
+        }
+    },
+    yourTurn(){
+         //funzione calcolo critico per player
+        const damage = calculateDamage(store.playerCharacter)
+        // calcolo danno che faccio a nemico, in base alla sua difesa
+        const damageTaken = calculateDamageTaken(store.playerCharacter, this.selectedEnemy);
+        // vita scende in base al valore di attacco
+       this.selectedEnemy.life -= damageTaken;
+
+        if(this.selectedEnemy.life  <= 0) {
+            //sconfitta se HP nemico è a 0
+            console.log('nemico sconfitto')
+            //mostro schermata vittoria
+            this.showWin = true;
+        } else {
+            // cambia turno
+            this.endTurn()
+        }
+    },
+    endTurn() {
+        //cambia sempre il turno
+        this.turn = !this.turn
+        if(!this.turn) {
+            // se è false, chiama l'attacco nemico
+            setTimeout(this.enemyTurn, 3000)
+        }
+    },
+    //metdo per restartare il gioco dopo aver finito
+    restart() {
+        this.showGameOver = false
+        this.showWin = false
+        this.getCharacters()
     }
     }
 }
@@ -70,7 +120,7 @@ export default {
             </div>
             <div class="col-6">
                 <div class="char-spot d-flex mb-3 justify-content-center">
-                    <img :src="selectedEnemy.type.image" alt="">
+                    <img v-if="selectedEnemy.type" :src="selectedEnemy.type.image" alt="">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm-enemy p-3">
                         <div class="frame">
@@ -94,7 +144,7 @@ export default {
                         </div>
                         <div class="col-6">
                             <div class="boxy d-flex flex-column  align-items-center">
-                                <div class="bt-ui bg-darker" @click="attack()">Attacca</div>
+                                <div class="bt-ui bg-darker" @click="yourTurn">Attacca</div>
                                 <div class="bt-ui bg-darker">Passa il turno..</div>
                             </div>
                         </div>
@@ -111,6 +161,26 @@ export default {
         </div>
     </div>
 </div>
+<!-- sconfitta -->
+ <div v-if="showGameOver" :class="{'game-over-screen gradual': showGameOver}" class="game-over-screen d-flex justify-content-center align-items-center">
+    <div class="content">
+        <h1 class="text-uppercase">Game over</h1>
+        <div class="d-flex btns">
+            <button @click="restart">Riprovo</button>
+            <router-link :to="{name: 'characters'}">Cerco un eroe migliore</router-link>
+        </div>
+    </div>
+ </div>
+ <div v-if="showWin" :class="{'win-screen gradual': showWin}" class="win-screen d-flex justify-content-center align-items-center">
+    <div class="content">
+        <h1 class="text-uppercase">Hai vinto!</h1>
+        <div class="d-flex btns">
+            <button @click="restart">Combatto ancora!</button>
+            <router-link :to="{name: 'characters'}">Cerco un eroe migliore</router-link>
+            <router-link :to="{name: 'homepage'}">Torno a casa</router-link>
+        </div>
+    </div>
+ </div>
 </template>
 
 <style lang="scss" scoped>
@@ -236,6 +306,64 @@ export default {
             align-self: end;
             box-shadow: inset 0 60px 20px rgba(0, 0, 0, 0.453), /* Ombra nera interna */
             inset 0 0 40px rgba(255, 255, 255, 0.7); /* Ombra bianca esterna */
+        }
+    }
+}
+
+.win-screen, .game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: all 1s ease-in;
+}
+
+.win-screen {
+    color: $seal-brown;
+    background-color: #cdbeaccb;
+    &.gradual {
+        display: flex;
+        opacity: 1;
+    }
+}
+.game-over-screen {
+    color: white;
+    background-color: #352f28c2;
+    &.gradual {
+        display: flex;
+        opacity: 1;
+    }   
+}
+.content {
+    text-align: center;
+    .btns {
+        margin-top: 20px;
+        button, a {
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none; 
+            text-align: center;  
+            font-family: 'Cinzel', serif;
+            padding: 10px 20px; 
+            color: #fff;
+            cursor: pointer;
+        }
+        a {
+            margin-left: 20px;
+            background-color: #8e7444;
+            &:hover {
+                background-color: #c49743;
+            }
+        }
+        button {
+            background-color:#83c546;; 
+            &:hover {
+                background-color: $acid-green;
+            }    
         }
     }
 }
