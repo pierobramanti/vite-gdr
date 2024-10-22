@@ -38,8 +38,8 @@ export default {
                 </ul>
             </div>
             <div class="custom-modal-footer">
-                <button type="button" class="btn btn-secondary me-3" @click="closeModal">Indietro</button>
-                <router-link :to="{name: 'confirmChoices', params: { slug: character.slug } }" type="button" class="btn btn-primary">Scelgo te!</router-link>
+                <button type="button" class="me-3" @click="closeModal">Indietro</button>
+                <router-link :to="{name: 'confirmChoices', params: { slug: character.slug } }" type="button">Scelgo te!</router-link>
             </div>
         </div>
     </div>
@@ -73,15 +73,18 @@ export default {
         .custom-modal-body {
             padding: 10px 0;
             .pg-img-box {
-                width: 300px;
+                width: 200px;
                 img {
                     max-width: 100%;
                     object-fit: contain;
                 }
             }
             .stats {
-                strong {
-                    letter-spacing: 1px;
+                li {
+                    font-size: 18px;
+                    strong {
+                        letter-spacing: 1px;
+                    }
                 }
             }
         }
@@ -89,6 +92,33 @@ export default {
             display: flex;
             justify-content: flex-end;
             padding-top: 10px;
+            a {
+                background-color:#83c546;; 
+                color: #fff; 
+                padding: 10px 20px;
+                text-align: center; 
+                text-decoration: none; 
+                display: inline-block;
+                &:hover {
+                    background-color: $acid-green; 
+                }
+            }
+            button {
+                background-color: #969696;
+                color: #fff;
+                &:hover {
+                    background-color: #666666; 
+                }
+            }
+            button, a {
+                font-size: 18px;
+                letter-spacing: 2px;
+                font-family: 'Cinzel', serif;
+                transition: all 0.3s;
+                border: none;
+                padding: 10px 20px; 
+                cursor: pointer;
+            }
         }
     }
 }
