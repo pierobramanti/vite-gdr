@@ -23,6 +23,8 @@ export default {
             axios.get(`${store.url}${store.urlCharacters}${store.urlConfirm}/${slug}`).then((res) => {
                 console.log(res.data.character.name);
                 this.selectedCharacter = res.data.character;
+                // salvo il personaggio associato all'utente
+                store.playerCharacter = this.selectedCharacter;
             }).catch((error) => {
                 console.error("errore", error);
             });
