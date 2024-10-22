@@ -30,9 +30,43 @@ export default {
         this.selectedEnemy = randomEnemy(this.enemies);
         console.log(this.selectedEnemy)
     },
-    attack(){
-        calculateDamage();
-    }
+    // TURNO NEMICO
+    enemyTurn() {
+        //funzione calcolo critico per nemico
+        const damage = calculateDamage(this.selectedEnemy)
+        // vita scende in base al valore di attacco
+        store.playerCharacter.life -= damage
+        if(store.playerCharacter.life <= 0) {
+            //sconfitta se HP player è a zero
+            console.log('sei stato sconfitto')
+        } else {
+            // cambia turno
+            this.endTurn()
+        }
+    },
+    yourTurn(){
+         //funzione calcolo critico per player
+        const damage = calculateDamage(store.playerCharacter)
+        // vita scende in base al valore di attacco
+       this.selectedEnemy.life -= damage;
+
+        if(this.selectedEnemy.life  <= 0) {
+            //sconfitta se HP nemico è a 0
+            console.log('nemico sconfitto')
+        } else {
+            // cambia turno
+            this.endTurn()
+        }
+    },
+    endTurn() {
+        //cambia sempre il turno
+        this.turn = !this.turn
+        if(!this.turn) {
+            // se è false, chiama l'attacco nemico
+            setTimeout(this.enemyTurn, 3000)
+        }
+    },
+
     }
 }
 </script>
@@ -94,7 +128,7 @@ export default {
                         </div>
                         <div class="col-6">
                             <div class="boxy d-flex flex-column  align-items-center">
-                                <div class="bt-ui bg-darker" @click="attack()">Attacca</div>
+                                <div class="bt-ui bg-darker" @click="yourTurn">Attacca</div>
                                 <div class="bt-ui bg-darker">Passa il turno..</div>
                             </div>
                         </div>
