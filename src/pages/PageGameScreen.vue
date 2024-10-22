@@ -1,18 +1,25 @@
 <script>
 import { store } from '../store';
+import axios from 'axios';
 import { randomEnemy, calculateDamageTaken, calculateDamage } from '../data/gameLogic';
 export default {
     data() {
         return {
-            store
+            store,
+            enemies: ''
         }
     },
     created() {
-        console.log(store.playerCharacter)
-      
+      this.getCharacters()
     },
     methods: {
-        
+        getCharacters() {
+            axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
+                this.enemies = res.data.results.data
+                console.log(this.characters)
+                store.characters = res.data.results.data;
+            })
+    }
     }
 }
 </script>
