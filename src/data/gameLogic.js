@@ -1,7 +1,10 @@
 // funzione personaggio random
 function randomEnemy(enemies) {
-    const r = Math.floor(Math.random() * enemies.length)
-    return enemies[r]
+    if (enemies.length === 0) {
+        return null;  // O restituisci un valore di fallback appropriato
+    }
+    const r = Math.floor(Math.random() * enemies.length);
+    return enemies[r];
 }
 
 // funzione difesa
@@ -16,7 +19,7 @@ function calculateDamageTaken(attacker, target) {
     } else if (target.defence >= 6 && target.defence <= 10) {
         damageReduction = 0.2
     } else if (target.defence >= 11 && target.defence <= 15) {
-        damageReduction = 0.5; 
+        damageReduction = 0.5;
     }
 
     // danno finale
@@ -29,7 +32,7 @@ function calculateDamage(attacker) {
     const baseDamage = attacker.strength
     // calcolo critico
     let damageCrit;
-    if(baseDamage >=1 && baseDamage <=5) {
+    if (baseDamage >= 1 && baseDamage <= 5) {
         damageCrit = Math.random() * 0.1;
     } else if (baseDamage >= 6 && baseDamage <= 10) {
         damageCrit = Math.random() * 0.3
@@ -38,11 +41,11 @@ function calculateDamage(attacker) {
     }
     const totDamage = baseDamage + damageCrit;
 
-    if(damageCrit > 0) {
-        return console.log('Danno totale: '+totDamage+'. Danno base: ' + baseDamage + '. Critico: ' + damageCrit)
+    if (damageCrit > 0) {
+        return console.log('Danno totale: ' + totDamage + '. Danno base: ' + baseDamage + '. Critico: ' + damageCrit)
     } else {
-        return console.log('No critico! '+totDamage+'. Danno base: ' + baseDamage + '. Critico: ' + damageCrit)
+        return console.log('No critico! ' + totDamage + '. Danno base: ' + baseDamage + '. Critico: ' + damageCrit)
     }
 }
 
-export {randomEnemy, calculateDamageTaken, calculateDamage}
+export { randomEnemy, calculateDamageTaken, calculateDamage }
