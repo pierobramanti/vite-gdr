@@ -62,9 +62,9 @@ export default {
             <div class="col-12">
                 <nav aria-label="Page navigation" class="d-flex justify-content-center my-3">
                     <ul class="pagination">
-                      <li class="page-item"><a class="page-link" :class="current_page == first_page ? 'disabled' : ''" href="#" @click="changePage(current_page - 1); $event.target.blur()" aria-label="Previous">Mi volgo indietro</a></li>
-                      <li class="page-item" v-for="page in last_page"><a class="page-link" href="#" @click="changePage(page); $event.target.blur()">{{page}}</a></li>
-                      <li class="page-item"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="changePage(current_page + 1); $event.target.blur()" aria-label="Next">Vado oltre</a></li>
+                      <li class="page-item fw-bolder"><a class="page-link" :class="current_page == first_page ? 'disabled' : ''" href="#" @click="changePage(current_page - 1); $event.target.blur()" aria-label="Previous">Mi volgo indietro</a></li>
+                      <li class="page-item fw-bolder" v-for="page in last_page"><a class="page-link" href="#" @click="changePage(page); $event.target.blur()">{{page}}</a></li>
+                      <li class="page-item fw-bolder"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="changePage(current_page + 1); $event.target.blur()" aria-label="Next">Vado oltre</a></li>
                     </ul>
                   </nav>
             </div>
@@ -102,4 +102,42 @@ export default {
             color: $seal_brown;
         }
     }
+
+// NAVBAR //
+
+
+nav {
+    margin: 20px 0; 
+    
+    .pagination {
+        display: flex;
+        list-style: none; 
+        padding: 0;
+        border-radius: 8px;
+        border: 2px solid $espresso; 
+    }
+
+
+    .page-link {
+        font-family: 'Cinzel', serif; 
+        background-color:  #8e7444; 
+        color: #fff; 
+        padding: 8px 15px; 
+        border: 1px solid $acid-green; 
+        text-decoration: none; 
+        transition: background-color 0.5s ease; 
+    }
+
+   
+    .page-link:hover {
+        background-color:  #c49743; 
+        color: #fff; 
+        font-weight: 800;  
+    }
+        
+
+
+  
+}
+
 </style>

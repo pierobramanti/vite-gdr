@@ -59,6 +59,13 @@ export default {
     .background-images {
         background-color: $coffee; 
     }
+
+    img {
+        height: 420px; 
+        width: 100%; 
+        object-fit: cover; 
+        
+    }
 }
 
 
