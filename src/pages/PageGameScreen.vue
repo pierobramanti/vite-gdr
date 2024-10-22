@@ -37,7 +37,10 @@ export default {
         //funzione calcolo critico per nemico
         const damage = calculateDamage(this.selectedEnemy)
         // vita scende in base al valore di attacco
-        store.playerCharacter.life -= damage
+        // calcolo danno che nemico mi da, in base alla mia difesa
+        const damageTaken = calculateDamageTaken(this.selectedEnemy, store.playerCharacter);
+        store.playerCharacter.life -= damageTaken
+
         if(store.playerCharacter.life <= 0) {
             //sconfitta se HP player è a zero
             console.log('sei stato sconfitto')
@@ -51,8 +54,10 @@ export default {
     yourTurn(){
          //funzione calcolo critico per player
         const damage = calculateDamage(store.playerCharacter)
+        // calcolo danno che faccio a nemico, in base alla sua difesa
+        const damageTaken = calculateDamageTaken(store.playerCharacter, this.selectedEnemy);
         // vita scende in base al valore di attacco
-       this.selectedEnemy.life -= damage;
+       this.selectedEnemy.life -= damageTaken;
 
         if(this.selectedEnemy.life  <= 0) {
             //sconfitta se HP nemico è a 0
@@ -115,7 +120,7 @@ export default {
             </div>
             <div class="col-6">
                 <div class="char-spot d-flex mb-3 justify-content-center">
-                    <img :src="selectedEnemy.type.image" alt="">
+                    <img v-if="selectedEnemy.type" :src="selectedEnemy.type.image" alt="">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm-enemy p-3">
                         <div class="frame">

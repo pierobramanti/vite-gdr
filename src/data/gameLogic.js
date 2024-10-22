@@ -23,7 +23,8 @@ function calculateDamageTaken(attacker, target) {
     }
 
     // danno finale
-    const damageTaken = baseDamage * (1 - damageReduction)
+    const damageTaken = Math.floor(baseDamage * (1 - damageReduction))
+    console.log('Danno realmente subito: '+damageTaken +'. Danno prima della difesa: '+baseDamage+'. Riduzione: '+Math.round(damageReduction * 100)+'%.')
     // ritorna valore da 0 in su
     return Math.max(damageTaken, 0);
 }
@@ -41,7 +42,7 @@ function calculateDamage(attacker) {
     }
     const totDamage = Math.floor(baseDamage + damageCrit);
     console.log('Totale danno: ' +totDamage +'. Critico = ' + Math.round(damageCrit * 100) + '%')
-        return totDamage
+    return totDamage
        
 }
 
