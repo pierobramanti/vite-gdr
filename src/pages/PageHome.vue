@@ -109,6 +109,16 @@ export default {
                 border-bottom: 1px solid white;
                 color: white;
             }
+            &.disabled {
+                color: grey;
+                border-bottom: 1px solid grey;
+                cursor: not-allowed;
+                &:hover {
+                    padding: 6px 0;
+                    border-bottom: 1px solid grey;
+                    color: grey;
+                }
+            }
         }
     }
 }
