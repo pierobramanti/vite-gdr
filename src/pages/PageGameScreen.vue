@@ -6,37 +6,57 @@ export default {
 <template>
 <div class="g-wrapper">
     <!--classico titolo di combattimento e testo di gioco "tizio vs tizio", "è il tuo turno"-->
-    <div class="row">
-        <div class="col-12 p-5 text-center">
-            <h1>
-                E' il tuo turno, viandante
-            </h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-5 text-center">
+                <div class="roundy">
+                    <h1>
+                        E' il tuo turno, viandante
+                    </h1>
+                </div>
+            </div>
         </div>
     </div>
     <!--Questa sarà la zona in cui saranno posizionati i personaggi -->
-    <div class="row">
-        <div class="col-6">
-            <div class="char-spot d-flex mb-3 justify-content-center">
-                <div class="pedistal"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="char-spot d-flex mb-3 justify-content-center">
+                    <img src="../../public/img/character/bard.gif" alt="">
+                    <div class="pedistal"></div>
+                    <div class="ui-g-wrapper-sm p-3">
+                        <div class="frame">
+                            HP:100
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-6">
-            <div class="char-spot d-flex mb-3 justify-content-center">
-                <div class="pedistal"></div>
+            <div class="col-6">
+                <div class="char-spot d-flex mb-3 justify-content-center">
+                    <img src="../../public/img/character/wizard.gif" alt="">
+                    <div class="pedistal"></div>
+                    <div class="ui-g-wrapper-sm-enemy p-3">
+                        <div class="frame">
+                            HP: 100
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!--UI di gameplay-->
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center mb-5">
-            <div class="ui-g-wrapper p-2">
-                <div class="frame">
-                    <div class="col-6 boxy d-flex flex-column justify-content-center align-items-center">
-                        <div class="bt-ui">Abilita'</div>
-                        <div class="bt-ui">Oggetti</div>
-                        <div class="bt-ui">Scappa</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="ui-g-wrapper p-3">
+                    <div class="frame">
+                        <div class="col-6 boxy d-flex flex-column justify-content-center align-items-center">
+                            <div class="bt-ui">Abilita'</div>
+                            <div class="bt-ui">Oggetti</div>
+                            <div class="bt-ui">Scappa</div>
+                        </div>
+                        <div class="col-6"></div>
                     </div>
-                    <div class="col-6"></div>
                 </div>
             </div>
         </div>
@@ -52,13 +72,63 @@ export default {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-image: url(https://img.goodfon.com/original/1920x1080/e/ee/darkest-dungeon-death-candles-swords-ruins-altar.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-family: 'Dungeon', sans-serif;
 
-    h1{
-        font-family: 'Dungeon', sans-serif;
-        color: $seal-brown;
-        font-size: 85px;
-        background-color: white;
+    .roundy{
         border-radius: 60%;
+        position: relative;
+        background-image: url(../../public/img/background/rb_2147486747.png);
+        background-size: 40%;
+        background-position: center;
+        background-repeat: repeat;
+
+
+            h1{
+                font-family: 'Dungeon', sans-serif;
+                color: white;
+                font-size: 150px;
+                text-shadow: $seal-brown 8px 8px 8px ;
+            }
+    }
+
+    .char-spot{
+        position: relative;
+        .ui-g-wrapper-sm{
+            background-color: #cdbeac;
+            height: 100px;
+            width: 200px;
+            border-radius: 30px;
+            position: absolute;
+            right: 10%;
+            top: 40%;
+            
+            .frame{
+                border: 4px solid $seal-brown;
+                background-color: white;
+                height: 100%;
+                box-shadow: black 0px 0px 3px;
+            }
+        }
+        .ui-g-wrapper-sm-enemy{
+            background-color: #cdbeac;
+            height: 100px;
+            width: 200px;
+            border-radius: 30px;
+            position: absolute;
+            left: 10%;
+            top: 40%;
+            
+            .frame{
+                border: 4px solid $seal-brown;
+                background-color: white;
+                height: 100%;
+                box-shadow: black 0px 0px 3px;
+            }
+        }
     }
 
     .ui-g-wrapper{
@@ -71,7 +141,7 @@ export default {
             border: 4px solid $seal-brown;
             background-color: white;
             height: 100%;
-            box-shadow: $seal-brown 8px 8px 8px ;
+            box-shadow: black 0px 0px 3px;
         }
 
         .boxy{
@@ -80,7 +150,6 @@ export default {
         }
 
         .bt-ui{
-            font-family: 'Dungeon', sans-serif;
             font-size: 30px;
             border: 2px solid $seal-brown;
             height: calc(100% / 3);
@@ -97,12 +166,20 @@ export default {
 
     .char-spot{
         height: 340px;
+        position: relative;
+        img{
+            position: absolute;
+            width: 320px;
+            top: -5%;
+        }
         .pedistal{
             width: 275px;
             height: 75px;
             background-color: white;
             border-radius: 60%;
             align-self: end;
+            box-shadow: inset 0 60px 20px rgba(0, 0, 0, 0.453), /* Ombra nera interna */
+            inset 0 0 40px rgba(255, 255, 255, 0.7); /* Ombra bianca esterna */
         }
     }
 }
