@@ -10,7 +10,8 @@ export default {
             selectedEnemy: {},
             playerTurn: '',
             turn: true, // true è il player, false è l'avversario
-            action: true //false (il bottone azioni non è cliccato)
+            action: true, //false (il bottone azioni non è cliccato)
+            showGameOver: false, //flag per visualizzare il messaggio di sconfitta
         }
     },
     created() {
@@ -39,6 +40,8 @@ export default {
         if(store.playerCharacter.life <= 0) {
             //sconfitta se HP player è a zero
             console.log('sei stato sconfitto')
+            // mostro schermata sconfitta
+            this.showGameOver = true;
         } else {
             // cambia turno
             this.endTurn()
@@ -66,7 +69,11 @@ export default {
             setTimeout(this.enemyTurn, 3000)
         }
     },
-
+    //metdo per restartare il gioco dopo aver finito
+    restart() {
+        this.showGameOver = false
+        this.getCharacters()
+    }
     }
 }
 </script>
@@ -145,6 +152,16 @@ export default {
         </div>
     </div>
 </div>
+<!-- sconfitta -->
+ <div v-if="showGameOver" :class="{'game-over-screen gradual': showGameOver}" class="game-over-screen d-flex justify-content-center align-items-center">
+    <div class="content">
+        <h1 class="text-uppercase text-white">Game over</h1>
+        <div class="d-flex btns">
+            <button @click="restart">Riprovo</button>
+            <router-link :to="{name: 'characters'}">Cerco un eroe migliore</router-link>
+        </div>
+    </div>
+ </div>
 </template>
 
 <style lang="scss" scoped>
@@ -270,6 +287,53 @@ export default {
             align-self: end;
             box-shadow: inset 0 60px 20px rgba(0, 0, 0, 0.453), /* Ombra nera interna */
             inset 0 0 40px rgba(255, 255, 255, 0.7); /* Ombra bianca esterna */
+        }
+    }
+}
+
+.game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #352f28c2;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: all 1s ease-in;
+    &.gradual {
+        display: flex;
+        opacity: 1;
+    }
+    .content {
+        text-shadow:rgba(255, 255, 255, 0.7);
+        text-align: center;
+        .btns {
+            margin-top: 20px;
+            button, a {
+                text-decoration: none;
+                transition: all 0.3s;
+                border: none; 
+                text-align: center;  
+                font-family: 'Cinzel', serif;
+                padding: 10px 20px; 
+                color: #fff;
+                cursor: pointer;
+            }
+            a {
+                margin-left: 20px;
+                background-color: #8e7444;
+                &:hover {
+                    background-color: #c49743;
+                }
+            }
+            button {
+                background-color:#83c546;; 
+                &:hover {
+                    background-color: $acid-green;
+                }    
+            }
         }
     }
 }
