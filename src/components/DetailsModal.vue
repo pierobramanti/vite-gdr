@@ -15,7 +15,7 @@ export default {
     <div v-if="character" class="modal-overlay" @click.self="closeModal">
         <div class="custom-modal text-white">
             <div class="custom-modal-header">
-                <h2 class="modal-title">Scheda di {{ character.name }}</h2>
+                <h2 class="modal-title">Scheda di <strong>{{ character.name }}</strong></h2>
                 <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
             </div>
             <div class="custom-modal-body">
@@ -69,6 +69,14 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .modal-title {
+                font-size: 32px;
+                strong {
+                    color: $acid-green;
+                    letter-spacing: 2px;
+                    font-size: 34px;
+                }
+            }
         }        
         .custom-modal-body {
             padding: 10px 0;
@@ -81,7 +89,7 @@ export default {
             }
             .stats {
                 li {
-                    font-size: 18px;
+                    font-size: 24px;
                     strong {
                         letter-spacing: 1px;
                     }
@@ -111,7 +119,7 @@ export default {
                 }
             }
             button, a {
-                font-size: 18px;
+                font-size: 14px;
                 letter-spacing: 2px;
                 font-family: 'Cinzel', serif;
                 transition: all 0.3s;
