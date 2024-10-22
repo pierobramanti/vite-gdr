@@ -5,7 +5,9 @@ export default {
     data() {
         return {
             playerName: '',
-            store
+            store,
+            // messaggio d'errore se non viene inserito nickname, inizializzato a stringa vuota
+            errorMessage: ''
         }
     },
     methods: {
@@ -14,6 +16,9 @@ export default {
                 localStorage.setItem('playerName', this.playerName)
                 store.playerName = this.playerName
                 this.$router.push({name: 'characters'})
+            } else {
+                // riempi stringa con messaggio di errore
+                this.errorMessage = "Un nome o un soprannome e' d'obbligo"
             }
         }
     }
@@ -38,12 +43,13 @@ export default {
                             <div class="row">
                                 <div class="col-12">
                                     <label for="player" class="form-label">Inserite il Vostro nome, <strong class="name_color">viandante</strong></label>
-                                    <input class="form-control" type="text" id="player" name="player" v-model="playerName" placeholder="Il Vostro nome">
+                                    <input class="form-control" type="text" id="player" name="player" v-model="playerName" placeholder="Il Vostro nome" @input="errorMessage = ''">
+                                    <p v-if="errorMessage" class="alert m-0">{{ errorMessage }}</p>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <router-link :to="{name: 'characters' }" @click="saveName">Inizia</router-link>
+                    <button type="submit" @click="saveName" :class="!playerName ? 'disabled' : ''">Inizia</button>
                 </div>
             </div>
         </div>
@@ -82,14 +88,21 @@ export default {
             font-weight: 700;
             letter-spacing: 6px;
         }
+        .alert{
+            font-size: 22px;
+            letter-spacing: 1px;
+            background-color: $coffee;
+        }
 
-        a {
+        button {
+            background-color: transparent;
             text-decoration: none;
             transition: all 0.5s;
             font-size: 30px;
             letter-spacing: 1px;
             padding: 6px 0;
             color: $blue-black;
+            border: none;
             border-bottom: 1px solid $blue-black;
             &:hover {
                 padding: 6px;
