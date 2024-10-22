@@ -6,6 +6,7 @@ const store = reactive({
     urlConfirm: '/confirm-choices',
     urlItems: '/items',
 
+    characters: [],
     // salvataggio dati relativi all'utente giocatore
     playerName: '',
     playerCharacter: ''
