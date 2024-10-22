@@ -4,6 +4,7 @@ import PageHome from "./pages/PageHome.vue";
 import PageCharacterSelect from "./pages/PageCharacterSelect.vue";
 import PageConfirmChoices from "./pages/PageConfirmChoices.vue";
 import PageGameScreen from "./pages/PageGameScreen.vue";
+import PageLoad from "./pages/PageLoad.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -24,6 +25,11 @@ const router = createRouter({
             component: PageConfirmChoices
         },
         {
+            path: '/load',
+            name: 'load',
+            component: PageLoad
+        },
+        {
             path: '/raccoon-the-game',
             name: 'raccoon-the-game',
             component: PageGameScreen
@@ -31,4 +37,4 @@ const router = createRouter({
     ]
 })
 
-export {router}
+export { router }
