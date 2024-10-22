@@ -5,7 +5,7 @@ export default {
     data() {
         return {
             store,
-            selectedCharacter: null
+            selectedCharacter: {}
         }
     },
     created() {
@@ -21,10 +21,10 @@ export default {
     methods: {
         getDetails(slug) {
             axios.get(`${store.url}${store.urlCharacters}${store.urlConfirm}/${slug}`).then((res) => {
-                console.log(res.data.character.name);
                 this.selectedCharacter = res.data.character;
+                console.log(this.selectedCharacter)
                 // salvo il personaggio associato all'utente
-                store.playerCharacter = this.selectedCharacter;
+                store.playerCharacter = res.data.character;
             }).catch((error) => {
                 console.error("errore", error);
             });
