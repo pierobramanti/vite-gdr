@@ -6,19 +6,32 @@ export default {
     data() {
         return {
             store,
-            enemies: ''
+            enemies: [],
+            selectedEnemy: {},
+            playerTurn: '',
+            turn: true, // true è il player, false è l'avversario
+            action: true //false (il bottone azioni non è cliccato)
         }
     },
     created() {
-      this.getCharacters()
+      this.getCharacters();
     },
     methods: {
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
-                this.enemies = res.data.results.data
-                console.log(this.characters)
-                store.characters = res.data.results.data;
-            })
+                this.enemies = res.data.results.data;
+                console.log(this.enemies); 
+                this.pickEnemy();
+            }).catch((error) => {
+                console.error("Errore nel caricamento dei personaggi:", error);
+            });
+        },
+    pickEnemy(){
+        this.selectedEnemy = randomEnemy(this.enemies);
+        console.log(this.selectedEnemy)
+    },
+    attack(){
+        calculateDamage();
     }
     }
 }
@@ -31,8 +44,11 @@ export default {
         <div class="row">
             <div class="col-12 p-5 text-center">
                 <div class="roundy">
-                    <h1>
-                        E' il tuo turno, {{store.playerCharacter.name}}
+                    <h1 v-if="turn">
+                        E' il tuo turno, {{store.playerName}}
+                    </h1>
+                    <h1 v-else>
+                        E' il turno di {{ selectedEnemy.name }}
                     </h1>
                 </div>
             </div>
@@ -54,11 +70,11 @@ export default {
             </div>
             <div class="col-6">
                 <div class="char-spot d-flex mb-3 justify-content-center">
-                    <img src="../../public/img/character/wizard.gif" alt="">
+                    <img :src="selectedEnemy.type.image" alt="">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm-enemy p-3">
                         <div class="frame">
-                            HP: 100
+                            HP: {{selectedEnemy.life}}
                         </div>
                     </div>
                 </div>
@@ -69,14 +85,26 @@ export default {
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
-                <div class="ui-g-wrapper p-3">
-                    <div class="frame">
+                <div v-if="turn" class="ui-g-wrapper p-3">
+                    <div class="frame d-flex">
                         <div class="col-6 boxy d-flex flex-column justify-content-center align-items-center">
-                            <div class="bt-ui">Abilita'</div>
+                            <div class="bt-ui">Azioni</div>
                             <div class="bt-ui">Oggetti</div>
                             <div class="bt-ui">Scappa</div>
                         </div>
-                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <div class="boxy d-flex flex-column  align-items-center">
+                                <div class="bt-ui bg-darker" @click="attack()">Attacca</div>
+                                <div class="bt-ui bg-darker">Passa il turno..</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="ui-g-wrapper p-3">
+                    <div class="frame">
+                        <div class="col-12 boxy d-flex flex-column justify-content-center align-items-center">
+                          <h2>L'avversario sceglie la sua mossa...</h2>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +115,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/generals.scss';
+
+.bg-darker{
+    background-color: #cdbeac;
+}
 
 .g-wrapper{
     height: 100vh;
