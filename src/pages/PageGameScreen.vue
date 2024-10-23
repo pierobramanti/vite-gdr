@@ -155,7 +155,7 @@ export default {
                         <div class="frame px-2">
                             <p class="text-health m-0 mx-2">HP: {{store.playerCharacter.life}}</p>
                             <div class="health-bar-container">
-                                <div class="health-bar" :style="{ width: playerHealthPercentage + '%' }"></div>
+                                <div class="health-bar" :style="{ width: playerHealthPercentage + '%', backgroundColor: playerHealthPercentage < 50 ? '#f44336' : '#4caf50' }"></div>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ export default {
                         <div class="frame px-2">
                             <p class="text-health m-0 mx-2">HP: {{selectedEnemy.life}}</p>
                             <div class="health-bar-container">
-                                <div class="health-bar" :style="{ width: enemyHealthPercentage + '%' }"></div>
+                                <div class="health-bar" :style="{ width: enemyHealthPercentage + '%', backgroundColor: enemyHealthPercentage < 50 ? '#f44336' : '#4caf50' }"></div>
                               </div>
                         </div>
                     </div>
