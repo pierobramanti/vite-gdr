@@ -16,6 +16,7 @@ export default {
         }
     },
     created() {
+        this.recoveryPlayerName();
       this.getCharacters();
       this.loadSelectedCharacter();
     },
@@ -34,6 +35,12 @@ export default {
   }
     },
     methods: {
+        recoveryPlayerName() {
+            const playerName = localStorage.getItem('playerName')
+            if(playerName) {
+                this.store.playerName = playerName
+            }
+        },
         loadSelectedCharacter() {
             const savedCharacter = localStorage.getItem('selectedCharacter');
             if (savedCharacter) {
