@@ -57,7 +57,7 @@ export default {
                                 <h3>avete la certezza di voler proseguire?</h3>
                                 <!-- ancora da gestire -->
                                 <div class="d-flex flex-column align-items-center justify-content-center mt-5 mb-3">
-                                    <router-link :to=" {name: 'raccoon-the-game'} " id="back-btn" class="mb-2">E' l'ora di combattere!</router-link>
+                                    <router-link :to=" {name: 'load'} " id="back-btn" class="mb-2">E' l'ora di combattere!</router-link>
                                     <router-link :to=" {name: 'characters' }" id="start-btn">Ci ripenso</router-link>
                                 </div>
                             </div>
