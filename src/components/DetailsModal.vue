@@ -18,10 +18,7 @@ export default {
                 <h2 class="modal-title">Scheda di <strong>{{ character.name }}</strong></h2>
                 <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
             </div>
-            <div class="custom-modal-body">
-                <div class="pg-img-box mx-auto" v-if="character.type.image">
-                    <img :src="character.type.image" class="img-fluid mb-3" :alt="`${character.type.name} class`">
-                </div>
+            <div class="custom-modal-body pt-5 pb-4">
                 <ul class="stats list-unstyled">
                     <li><strong class="me-1">Classe:</strong>{{ character.type.name }}</li>
                     <li><strong class="me-1">Forza:</strong>{{ character.strength }}</li>
@@ -36,6 +33,9 @@ export default {
                         <p>Nessuna descrizione disponibile</p>
                     </li>
                 </ul>
+                <div class="pg-img-box mx-auto" v-if="character.type.image">
+                    <img :src="character.type.image" class="img-fluid mb-3" :alt="`${character.type.name} class`">
+                </div>
             </div>
             <div class="custom-modal-footer">
                 <button type="button" class="me-3" @click="closeModal">Indietro</button>
@@ -56,7 +56,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 999;
+    padding: 0;
     animation: fadeIn 0.6s ease-out;
     .custom-modal {
         background: #212121;
@@ -64,7 +65,7 @@ export default {
         max-width: 600px;
         width: 100%;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        padding: 30px;
+        padding: 10px 30px;
         .custom-modal-header {
             display: flex;
             justify-content: space-between;
@@ -79,6 +80,8 @@ export default {
             }
         }        
         .custom-modal-body {
+            display: flex;
+            justify-content: space-between;
             padding: 10px 0;
             .pg-img-box {
                 width: 200px;
@@ -99,7 +102,7 @@ export default {
         .custom-modal-footer {
             display: flex;
             justify-content: flex-end;
-            padding-top: 10px;
+            padding-bottom: 10px;
             a {
                 background-color:#83c546;; 
                 color: #fff; 

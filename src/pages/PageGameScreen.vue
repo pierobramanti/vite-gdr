@@ -10,26 +10,36 @@ export default {
             selectedEnemy: {},
             playerTurn: '',
             turn: true, // true è il player, false è l'avversario
-            action: true //false (il bottone azioni non è cliccato)
+            action: false //false (il bottone azioni non è cliccato)
         }
     },
     created() {
       this.getCharacters();
     },
     methods: {
-        getCharacters() {
-            axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
-                this.enemies = res.data.results.data;
-                console.log(this.enemies); 
-                this.pickEnemy();
-            }).catch((error) => {
-                console.error("Errore nel caricamento dei personaggi:", error);
-            });
-        },
+    getCharacters() {
+        axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
+            this.enemies = res.data.results.data;
+            console.log(this.enemies); 
+            this.pickEnemy();
+        }).catch((error) => {
+            console.error("Errore nel caricamento dei personaggi:", error);
+        });
+    },
+
     pickEnemy(){
         this.selectedEnemy = randomEnemy(this.enemies);
         console.log(this.selectedEnemy)
     },
+
+    visibleActions() {
+        this.action = true
+    },
+
+    notVisibleActions() {
+        this.action = false
+    },
+
     attack(){
         calculateDamage();
     }
@@ -88,12 +98,12 @@ export default {
                 <div v-if="turn" class="ui-g-wrapper p-3">
                     <div class="frame d-flex">
                         <div class="col-6 boxy d-flex flex-column justify-content-center align-items-center">
-                            <div class="bt-ui">Azioni</div>
-                            <div class="bt-ui">Oggetti</div>
-                            <div class="bt-ui">Scappa</div>
+                            <div class="bt-ui" @click="visibleActions()">Azioni</div>
+                            <div class="bt-ui" @click="notVisibleActions()">Oggetti</div>
+                            <router-link :to="{ name: 'homepage'}" class="bt-ui">Scappa</router-link>
                         </div>
                         <div class="col-6">
-                            <div class="boxy d-flex flex-column  align-items-center">
+                            <div v-if="action" class="boxy d-flex flex-column  align-items-center">
                                 <div class="bt-ui bg-darker" @click="attack()">Attacca</div>
                                 <div class="bt-ui bg-darker">Passa il turno..</div>
                             </div>
@@ -205,6 +215,11 @@ export default {
             border-right: 2px solid $seal-brown;
         }
 
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
         .bt-ui{
             font-size: 30px;
             border: 2px solid $seal-brown;
@@ -218,6 +233,7 @@ export default {
                 box-shadow: inset 0 0 10px $seal-brown;
             }
         }
+        
     }
 
     .char-spot{

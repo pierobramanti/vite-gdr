@@ -29,10 +29,12 @@ export default {
 </script>
 
 <template>
-    <div class="col-12 col-md-6 col-lg-4">
-        <div class="card">
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+        <div class="card rounded-0" style="width: 20rem; height: 26rem;">
             <div v-if="character.type.image" class="background-images">
-                <img :src="character.type.image" class="card-img-top p-3" :alt="`${character.type.name} class`">
+                <div class="img_box">
+                    <img :src="character.type.image" :alt="`${character.type.name} class`">
+                </div>
             </div>
             <div class="card-body">
                 <h3 class="card-title">
@@ -57,14 +59,20 @@ export default {
     min-height: 300px;
 
     .background-images {
-        background-color: $coffee; 
-    }
+        background-color: $coffee;
 
-    img {
-        height: 420px; 
-        width: 100%; 
-        object-fit: cover; 
-        
+        .img_box {
+            height: 220px;
+            width: 100%;
+            padding: 15px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
     }
 }
 
@@ -85,7 +93,7 @@ export default {
     color: $acid-green; 
     text-align: center; 
     margin-bottom: 0.5rem; 
-    font-size: 60px;
+    font-size: 45px;
 }
 
 
@@ -93,11 +101,12 @@ h5 {
     font-family: 'Dungeon', sans-serif; 
     color: $coffee; 
     text-align: center; 
-    font-size: 45px;
+    font-size: 30px;
 }
 
 
 .custom-button {
+    font-size: 14px;
     background-color: #8e7444;
     color: #fff; 
     padding: 10px 20px; 
@@ -113,7 +122,8 @@ h5 {
 
 
 .custom-link-button {
-    background-color:#83c546;; 
+    font-size: 14px;
+    background-color:#83c546;
     color: #fff; 
     padding: 10px 20px; 
     border: none; 
