@@ -17,6 +17,7 @@ export default {
     },
     created() {
       this.getCharacters();
+      this.loadSelectedCharacter();
     },
     computed: {
         playerHealthPercentage() {
@@ -33,6 +34,12 @@ export default {
   }
     },
     methods: {
+        loadSelectedCharacter() {
+            const savedCharacter = localStorage.getItem('selectedCharacter');
+            if (savedCharacter) {
+                this.store.playerCharacter = JSON.parse(savedCharacter);
+            }
+        },
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
                 this.enemies = res.data.results.data;
