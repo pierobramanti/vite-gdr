@@ -9,7 +9,10 @@ const store = reactive({
     characters: [],
     // salvataggio dati relativi all'utente giocatore
     playerName: '',
-    playerCharacter: ''
+    playerCharacter: '',
+    PLayerScore: 0,
+    playerMaxLife: 0,
+    enemyMaxLife: 0,
 })
 
 export { store }
