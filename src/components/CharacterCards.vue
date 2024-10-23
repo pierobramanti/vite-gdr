@@ -23,6 +23,9 @@ export default {
             //reset character + nascondi modale
             this.visibleModal = false
             this.selectedCharacter = null //forse non mi serve
+        },
+        saveSelectedCharacter(character) {
+            localStorage.setItem('selectedCharacter', JSON.stringify(character));
         }
     }
 }
@@ -43,7 +46,7 @@ export default {
                 <h5 >Classe: {{character.type.name}}</h5>
                 <div class="d-flex justify-content-center mb-2 mt-3">
                     <button class="custom-button me-3 fw-bolder" @click="openModal"><i class="bi bi-eye-fill me-2 "></i>Dettagli</button>
-                    <router-link :to="{name: 'confirmChoices', params: { slug: character.slug } }" class="custom-link-button fw-bolder"> <i class="bi bi-hand-index me-2"></i>Scelgo te!</router-link>
+                    <router-link :to="{name: 'confirmChoices', params: { slug: character.slug } }" class="custom-link-button fw-bolder" @click="saveSelectedCharacter(character)"> <i class="bi bi-hand-index me-2"></i>Scelgo te!</router-link>
                 </div>
             </div>
         </div>
