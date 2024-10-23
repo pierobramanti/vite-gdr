@@ -10,9 +10,10 @@ export default {
             selectedEnemy: {},
             playerTurn: '',
             turn: true, // true è il player, false è l'avversario
-            action: true, //false (il bottone azioni non è cliccato)
+            action: false, //false (il bottone azioni non è cliccato)
             showGameOver: false, //flag per visualizzare il messaggio di sconfitta
             showWin: false, //flag per visualizzare il messaggio di vittoria
+            action: false //false (il bottone azioni non è cliccato)
         }
     },
     created() {
@@ -28,61 +29,71 @@ export default {
                 console.error("Errore nel caricamento dei personaggi:", error);
             });
         },
-    pickEnemy(){
-        this.selectedEnemy = randomEnemy(this.enemies);
-        console.log(this.selectedEnemy)
-    },
-    // TURNO NEMICO
-    enemyTurn() {
-        //funzione calcolo critico per nemico
-        const damage = calculateDamage(this.selectedEnemy)
-        // vita scende in base al valore di attacco
-        // calcolo danno che nemico mi da, in base alla mia difesa
-        const damageTaken = calculateDamageTaken(this.selectedEnemy, store.playerCharacter);
-        store.playerCharacter.life -= damageTaken
 
-        if(store.playerCharacter.life <= 0) {
-            //sconfitta se HP player è a zero
-            console.log('sei stato sconfitto')
-            // mostro schermata sconfitta
-            this.showGameOver = true;
-        } else {
-            // cambia turno
-            this.endTurn()
-        }
-    },
-    yourTurn(){
-         //funzione calcolo critico per player
-        const damage = calculateDamage(store.playerCharacter)
-        // calcolo danno che faccio a nemico, in base alla sua difesa
-        const damageTaken = calculateDamageTaken(store.playerCharacter, this.selectedEnemy);
-        // vita scende in base al valore di attacco
-       this.selectedEnemy.life -= damageTaken;
+        pickEnemy(){
+            this.selectedEnemy = randomEnemy(this.enemies);
+            console.log(this.selectedEnemy)
+        },
 
-        if(this.selectedEnemy.life  <= 0) {
-            //sconfitta se HP nemico è a 0
-            console.log('nemico sconfitto')
-            //mostro schermata vittoria
-            this.showWin = true;
-        } else {
-            // cambia turno
-            this.endTurn()
-        }
-    },
-    endTurn() {
-        //cambia sempre il turno
-        this.turn = !this.turn
-        if(!this.turn) {
-            // se è false, chiama l'attacco nemico
-            setTimeout(this.enemyTurn, 3000)
-        }
-    },
-    //metdo per restartare il gioco dopo aver finito
-    restart() {
-        this.showGameOver = false
-        this.showWin = false
-        this.getCharacters()
-    }
+        // TURNO NEMICO
+        enemyTurn() {
+            //funzione calcolo critico per nemico
+            const damage = calculateDamage(this.selectedEnemy)
+            // vita scende in base al valore di attacco
+            // calcolo danno che nemico mi da, in base alla mia difesa
+            const damageTaken = calculateDamageTaken(this.selectedEnemy, store.playerCharacter);
+            store.playerCharacter.life -= damageTaken
+
+            if(store.playerCharacter.life <= 0) {
+                //sconfitta se HP player è a zero
+                console.log('sei stato sconfitto')
+                // mostro schermata sconfitta
+                this.showGameOver = true;
+            } else {
+                // cambia turno
+                this.endTurn()
+            }
+        },
+        yourTurn(){
+             //funzione calcolo critico per player
+            const damage = calculateDamage(store.playerCharacter)
+            // calcolo danno che faccio a nemico, in base alla sua difesa
+            const damageTaken = calculateDamageTaken(store.playerCharacter, this.selectedEnemy);
+            // vita scende in base al valore di attacco
+           this.selectedEnemy.life -= damageTaken;
+
+            if(this.selectedEnemy.life  <= 0) {
+                //sconfitta se HP nemico è a 0
+                console.log('nemico sconfitto')
+                //mostro schermata vittoria
+                this.showWin = true;
+            } else {
+                // cambia turno
+                this.endTurn()
+            }
+        },
+        endTurn() {
+            //cambia sempre il turno
+            this.turn = !this.turn
+            if(!this.turn) {
+                // se è false, chiama l'attacco nemico
+                setTimeout(this.enemyTurn, 3000)
+            }
+        },
+        //metdo per restartare il gioco dopo aver finito
+        restart() {
+            this.showGameOver = false
+            this.showWin = false
+            this.getCharacters()
+        },
+
+        visibleActions() {
+            this.action = true
+        },
+
+        notVisibleActions() {
+            this.action = false
+        },
     }
 }
 </script>
@@ -138,12 +149,12 @@ export default {
                 <div v-if="turn" class="ui-g-wrapper p-3">
                     <div class="frame d-flex">
                         <div class="col-6 boxy d-flex flex-column justify-content-center align-items-center">
-                            <div class="bt-ui">Azioni</div>
-                            <div class="bt-ui">Oggetti</div>
-                            <div class="bt-ui">Scappa</div>
+                            <div class="bt-ui" @click="visibleActions()">Azioni</div>
+                            <div class="bt-ui" @click="notVisibleActions()">Oggetti</div>
+                            <router-link :to="{ name: 'homepage'}" class="bt-ui">Scappa</router-link>
                         </div>
                         <div class="col-6">
-                            <div class="boxy d-flex flex-column  align-items-center">
+                            <div v-if="action" class="boxy d-flex flex-column  align-items-center">
                                 <div class="bt-ui bg-darker" @click="yourTurn">Attacca</div>
                                 <div class="bt-ui bg-darker">Passa il turno..</div>
                             </div>
@@ -275,6 +286,11 @@ export default {
             border-right: 2px solid $seal-brown;
         }
 
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
         .bt-ui{
             font-size: 30px;
             border: 2px solid $seal-brown;
@@ -288,6 +304,7 @@ export default {
                 box-shadow: inset 0 0 10px $seal-brown;
             }
         }
+        
     }
 
     .char-spot{
