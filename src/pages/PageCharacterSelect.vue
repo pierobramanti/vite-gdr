@@ -18,7 +18,7 @@ export default {
     created() {
         const playerName = localStorage.getItem('playerName')
         if(playerName) {
-            this.store.playerName = playerName
+            store.playerName = playerName;
             this.getCharacters()
         }
         this.resetScore();
