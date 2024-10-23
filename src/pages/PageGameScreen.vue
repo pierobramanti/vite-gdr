@@ -132,7 +132,7 @@ export default {
     <!--classico titolo di combattimento e testo di gioco "tizio vs tizio", "è il tuo turno"-->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 p-5 text-center">
+            <div class="col-12 pt-5 text-center">
                 <div class="roundy">
                     <h1 v-if="turn">
                         E' il tuo turno, {{store.playerName}}
@@ -147,10 +147,12 @@ export default {
     <!--Questa sarà la zona in cui saranno posizionati i personaggi -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6">
-                <div class="char-spot d-flex mb-3 justify-content-center" v-if="store.playerCharacter.type">
-                    <img :src="store.playerCharacter.type.image" :alt="store.playerCharacter.name" class="pg-img">
-                    <div class="pedistal"></div>
+            <div class="col-6 position-relative">
+                <div class="char-spot d-flex justify-content-center" v-if="store.playerCharacter.type">
+                    <div class="d-flex justify-content-center">
+                        <img :src="store.playerCharacter.type.image" :alt="store.playerCharacter.name" class="pg-img">
+                        <div class="pedistal"></div>
+                    </div>
                     <div class="ui-g-wrapper-sm p-3">
                         <div class="frame px-2">
                             <p class="text-health m-0 mx-2">HP: {{store.playerCharacter.life}}</p>
@@ -161,11 +163,13 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="char-spot d-flex mb-3 justify-content-center">
-                    <img v-if="selectedEnemy.type" :src="selectedEnemy.type.image" alt="">
-                    <div class="pedistal"></div>
-                    <div class="ui-g-wrapper-sm-enemy p-3">
+            <div class="col-6 position-relative">
+                <div class="char-spot-enemy d-flex justify-content-center">
+                    <div class="d-flex justify-content-center">
+                        <img v-if="selectedEnemy.type" :src="selectedEnemy.type.image" alt="">
+                        <div class="pedistal"></div>
+                    </div>
+                   <div class="ui-g-wrapper-sm-enemy p-3">
                         <div class="frame px-2">
                             <p class="text-health m-0 mx-2">HP: {{selectedEnemy.life}}</p>
                             <div class="health-bar-container">
@@ -251,8 +255,8 @@ export default {
     
     .score{
         position: absolute;
-        top: 20%;
-        left: 10%;
+        top: -10px;
+        left: 15px;
         font-size: 55pt;
         text-shadow: #fff 1px 1px 2px;
     }
@@ -266,12 +270,12 @@ export default {
         background-repeat: repeat;
 
 
-            h1{
-                font-family: 'Dungeon', sans-serif;
-                color: white;
-                font-size: 150px;
-                text-shadow: $seal-brown 8px 8px 8px ;
-            }
+        h1{
+            font-family: 'Dungeon', sans-serif;
+            color: white;
+            font-size: 80px;
+            text-shadow: $seal-brown 8px 8px 8px ;
+        }
     }
 
     .char-spot{
@@ -285,7 +289,6 @@ export default {
             margin-left: 5px;
         }
 
-
         .ui-g-wrapper-sm{
             background-color: #cdbeac;
             height: 100px;
@@ -293,37 +296,7 @@ export default {
             border-radius: 30px;
             position: absolute;
             right: 10%;
-            top: 40%;
-            
-            .frame{
-                border: 4px solid $seal-brown;
-                background-color: white;
-                height: 100%;
-                box-shadow: black 0px 0px 3px;
-
-                .health-bar-container {
-                    width: 100%;
-                    background-color: #e0e0e0;
-                    border-radius: 10px;
-                    overflow: hidden;
-                }
-                
-                .health-bar {
-                    height: 20px;
-                    background-color: #4caf50;
-                    width: 100%; /* La larghezza sarà dinamica in base alla vita del giocatore */
-                    transition: width 0.5s; /* Aggiunge un'animazione fluida */
-                }
-            }
-        }
-        .ui-g-wrapper-sm-enemy{
-            background-color: #cdbeac;
-            height: 100px;
-            width: 200px;
-            border-radius: 30px;
-            position: absolute;
-            left: 10%;
-            top: 40%;
+            top: 20%;
             
             .frame{
                 border: 4px solid $seal-brown;
@@ -350,8 +323,8 @@ export default {
 
     .ui-g-wrapper{
         background-color: #cdbeac;
-        height: 200px;
-        width: 800px;
+        height: 175px;
+        width: 550px;
         border-radius: 30px;
 
         .frame{
@@ -392,12 +365,17 @@ export default {
         position: relative;
         img{
             position: absolute;
-            width: 320px;
-            top: -5%;
+            width: 280px;
+            top: 20%;
+            left: 20%;
+            z-index: 5;
         }
         .pedistal{
-            width: 275px;
-            height: 75px;
+            position: absolute;
+            bottom: -15%;
+            left: 22%;
+            width: 250px;
+            height: 90px;
             background-color: white;
             border-radius: 60%;
             align-self: end;
@@ -405,6 +383,68 @@ export default {
             inset 0 0 40px rgba(255, 255, 255, 0.7); /* Ombra bianca esterna */
         }
     }
+
+    .char-spot-enemy{
+        height: 340px;
+        position: relative;
+
+        .text-health{
+            font-size: 22px;
+            margin-left: 5px;
+        }
+
+        img{
+            position: absolute;
+            width: 280px;
+            top: 20%;
+            right: 20%;
+            z-index: 5
+        }
+        .pedistal{
+            position: absolute;
+            bottom: -15%;
+            right: 22%;
+            width: 240px;
+            height: 75px;
+            background-color: white;
+            border-radius: 60%;
+            align-self: end;
+            box-shadow: inset 0 60px 20px rgba(0, 0, 0, 0.453), /* Ombra nera interna */
+            inset 0 0 40px rgba(255, 255, 255, 0.7); /* Ombra bianca esterna */
+        }
+
+        .ui-g-wrapper-sm-enemy{
+            background-color: #cdbeac;
+            height: 100px;
+            width: 200px;
+            border-radius: 30px;
+            position: absolute;
+            left: 10%;
+            top: 20%;
+            
+            .frame{
+                border: 4px solid $seal-brown;
+                background-color: white;
+                height: 100%;
+                box-shadow: black 0px 0px 3px;
+
+                .health-bar-container {
+                    width: 100%;
+                    background-color: #e0e0e0;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+                
+                .health-bar {
+                    height: 20px;
+                    background-color: #4caf50;
+                    width: 100%; /* La larghezza sarà dinamica in base alla vita del giocatore */
+                    transition: width 0.5s; /* Aggiunge un'animazione fluida */
+                }
+            }
+        }
+    }
+
 }
 
 .win-screen, .game-over-screen {
