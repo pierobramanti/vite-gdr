@@ -25,6 +25,7 @@ export default {
                 console.log(this.selectedCharacter)
                 // salvo il personaggio associato all'utente
                 store.playerCharacter = res.data.character;
+                store.playerMaxLife = this.playerCharacter.life; //rende la max life del giocatore l'effettiva max life del pg (x healthbar)
             }).catch((error) => {
                 console.error("errore", error);
             });

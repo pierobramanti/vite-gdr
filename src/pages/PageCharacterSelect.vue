@@ -21,6 +21,7 @@ export default {
             this.store.playerName = playerName
             this.getCharacters()
         }
+        this.resetScore();
     },
     methods: {
         getCharacters() {
@@ -39,6 +40,9 @@ export default {
             axios.get(`${store.url}${store.urlCharacters}`, {params: { page: p}}).then((res) => {
                 this.characters = res.data.results.data
             })
+        },
+        resetScore(){
+            store.PLayerScore = 0
         }
     }
    

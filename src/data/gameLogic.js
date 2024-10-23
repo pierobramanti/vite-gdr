@@ -15,16 +15,16 @@ function calculateDamageTaken(attacker, target) {
     let damageReduction;
     // probabilità riduzione danno
     if (target.defence >= 1 && target.defence <= 5) {
-        damageReduction = 0;
+        damageReduction = 0.2;
     } else if (target.defence >= 6 && target.defence <= 10) {
-        damageReduction = Math.random() * 0.2
+        damageReduction = Math.random() * 0.4
     } else if (target.defence >= 11 && target.defence <= 15) {
-        damageReduction = Math.random() * 0.5;
+        damageReduction = Math.random() * 0.6;
     }
 
     // danno finale
     const damageTaken = Math.floor(baseDamage * (1 - damageReduction))
-    console.log('Danno realmente subito: '+damageTaken +'. Danno prima della difesa: '+baseDamage+'. Riduzione: '+Math.round(damageReduction * 100)+'%.')
+    console.log('Danno realmente subito: ' + damageTaken + '. Danno prima della difesa: ' + baseDamage + '. Riduzione: ' + Math.round(damageReduction * 100) + '%.')
     // ritorna valore da 0 in su
     return Math.max(damageTaken, 0);
 }
@@ -34,16 +34,16 @@ function calculateDamage(attacker) {
     // calcolo critico
     let damageCrit;
     if (baseDamage >= 1 && baseDamage <= 5) {
-        damageCrit = Math.random() * 0.1;
+        damageCrit = Math.random() * 0.3;
     } else if (baseDamage >= 6 && baseDamage <= 10) {
-        damageCrit = Math.random() * 0.3
-    } else if (baseDamage >= 11 && baseDamage <= 15) {
         damageCrit = Math.random() * 0.5
+    } else if (baseDamage >= 11 && baseDamage <= 15) {
+        damageCrit = Math.random() * 0.7
     }
     const totDamage = Math.floor(baseDamage + damageCrit);
-    console.log('Totale danno: ' +totDamage +'. Critico = ' + Math.round(damageCrit * 100) + '%')
+    console.log('Totale danno: ' + totDamage + '. Critico = ' + Math.round(damageCrit * 100) + '%')
     return totDamage
-       
+
 }
 
 export { randomEnemy, calculateDamageTaken, calculateDamage }

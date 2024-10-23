@@ -18,6 +18,20 @@ export default {
     created() {
       this.getCharacters();
     },
+    computed: {
+        playerHealthPercentage() {
+    const maxLife = store.playerMaxLife; 
+    const currentLife = store.playerCharacter.life;
+    return (currentLife / maxLife) * 100;
+  },
+  
+  // Percentuale della vita del nemico
+  enemyHealthPercentage() {
+    const maxLife = store.enemyMaxLife;
+    const currentLife = this.selectedEnemy.life;
+    return (currentLife / maxLife) * 100;
+  }
+    },
     methods: {
         getCharacters() {
             axios.get(`${store.url}${store.urlCharacters}`).then((res) => {
@@ -30,6 +44,7 @@ export default {
         },
     pickEnemy(){
         this.selectedEnemy = randomEnemy(this.enemies);
+        store.enemyMaxLife = this.selectedEnemy.life; //rendo la vita massima del nemico la sua effettiva vita massima (x healtbar)
         console.log(this.selectedEnemy)
     },
     // TURNO NEMICO
@@ -42,10 +57,8 @@ export default {
         store.playerCharacter.life -= damageTaken
 
         if(store.playerCharacter.life <= 0) {
-            //sconfitta se HP player è a zero
-            console.log('sei stato sconfitto')
-            // mostro schermata sconfitta
-            this.showGameOver = true;
+            //sconfitta 
+            this.lossCase()
         } else {
             // cambia turno
             this.endTurn()
@@ -60,10 +73,8 @@ export default {
        this.selectedEnemy.life -= damageTaken;
 
         if(this.selectedEnemy.life  <= 0) {
-            //sconfitta se HP nemico è a 0
-            console.log('nemico sconfitto')
-            //mostro schermata vittoria
-            this.showWin = true;
+            //vittoria
+            this.victoryCase()
         } else {
             // cambia turno
             this.endTurn()
@@ -82,6 +93,26 @@ export default {
         this.showGameOver = false
         this.showWin = false
         this.getCharacters()
+    },
+    //istanza vittoria
+    victoryCase(){
+        //sconfitta se HP nemico è a 0
+        console.log('nemico sconfitto')
+        //ricompense vittoria
+        store.playerCharacter.life += 60;
+        store.playerCharacter.strenght += 2;
+        store.playerCharacter.defense += 2;
+        store.PLayerScore += 10;
+        //
+        //mostro schermata vittoria
+         this.showWin = true; 
+    },
+    //istanza sconfitta
+    lossCase(){
+       //sconfitta se HP player è a zero
+        console.log('sei stato sconfitto')
+        // mostro schermata sconfitta
+        this.showGameOver = true;
     }
     }
 }
@@ -89,6 +120,8 @@ export default {
 
 <template>
 <div class="g-wrapper">
+    <!--score-->
+    <h1 class="text-success score">Score: {{store.PLayerScore}}</h1>
     <!--classico titolo di combattimento e testo di gioco "tizio vs tizio", "è il tuo turno"-->
     <div class="container-fluid">
         <div class="row">
@@ -112,8 +145,11 @@ export default {
                     <img :src="store.playerCharacter.type.image" :alt="store.playerCharacter.name" class="pg-img">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm p-3">
-                        <div class="frame">
-                            <p>HP: {{store.playerCharacter.life}}</p>
+                        <div class="frame px-2">
+                            <p class="text-health m-0 mx-2">HP: {{store.playerCharacter.life}}</p>
+                            <div class="health-bar-container">
+                                <div class="health-bar" :style="{ width: playerHealthPercentage + '%' }"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -123,8 +159,11 @@ export default {
                     <img v-if="selectedEnemy.type" :src="selectedEnemy.type.image" alt="">
                     <div class="pedistal"></div>
                     <div class="ui-g-wrapper-sm-enemy p-3">
-                        <div class="frame">
-                            HP: {{selectedEnemy.life}}
+                        <div class="frame px-2">
+                            <p class="text-health m-0 mx-2">HP: {{selectedEnemy.life}}</p>
+                            <div class="health-bar-container">
+                                <div class="health-bar" :style="{ width: enemyHealthPercentage + '%' }"></div>
+                              </div>
                         </div>
                     </div>
                 </div>
@@ -165,8 +204,9 @@ export default {
  <div v-if="showGameOver" :class="{'game-over-screen gradual': showGameOver}" class="game-over-screen d-flex justify-content-center align-items-center">
     <div class="content">
         <h1 class="text-uppercase">Game over</h1>
+        <p>Sei morto, non eri poi granchè, "eroe".</p>
+        <h1 class="text-danger">Score: {{store.PLayerScore}}</h1>
         <div class="d-flex btns">
-            <button @click="restart">Riprovo</button>
             <router-link :to="{name: 'characters'}">Cerco un eroe migliore</router-link>
         </div>
     </div>
@@ -200,6 +240,15 @@ export default {
     background-position: center;
     background-size: cover;
     font-family: 'Dungeon', sans-serif;
+    position: relative;
+    
+    .score{
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        font-size: 55pt;
+        text-shadow: #fff 1px 1px 2px;
+    }
 
     .roundy{
         border-radius: 60%;
@@ -223,6 +272,13 @@ export default {
         .pg-img {
             transform: scaleX(-1);
         }
+
+        .text-health{
+            font-size: 22px;
+            margin-left: 5px;
+        }
+
+
         .ui-g-wrapper-sm{
             background-color: #cdbeac;
             height: 100px;
@@ -237,6 +293,20 @@ export default {
                 background-color: white;
                 height: 100%;
                 box-shadow: black 0px 0px 3px;
+
+                .health-bar-container {
+                    width: 100%;
+                    background-color: #e0e0e0;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+                
+                .health-bar {
+                    height: 20px;
+                    background-color: #4caf50;
+                    width: 100%; /* La larghezza sarà dinamica in base alla vita del giocatore */
+                    transition: width 0.5s; /* Aggiunge un'animazione fluida */
+                }
             }
         }
         .ui-g-wrapper-sm-enemy{
@@ -253,6 +323,20 @@ export default {
                 background-color: white;
                 height: 100%;
                 box-shadow: black 0px 0px 3px;
+
+                .health-bar-container {
+                    width: 100%;
+                    background-color: #e0e0e0;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+                
+                .health-bar {
+                    height: 20px;
+                    background-color: #4caf50;
+                    width: 100%; /* La larghezza sarà dinamica in base alla vita del giocatore */
+                    transition: width 0.5s; /* Aggiunge un'animazione fluida */
+                }
             }
         }
     }
