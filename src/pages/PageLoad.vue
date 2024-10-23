@@ -4,7 +4,7 @@ export default {
   data() {
     return {
       store,
-      countdown: 25,
+      countdown: 10,
     };
   },
   mounted() {
