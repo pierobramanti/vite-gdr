@@ -79,17 +79,18 @@ export default {
         }
 
         .name_color {
-            color: $seal_brown;
+            color: $titles;
         }
 
         p {
-            color: $seal-brown;
+            color: $titles;
             font-size: 66px;
             font-weight: 700;
             letter-spacing: 6px;
         }
         .alert{
             font-size: 22px;
+            color: $seal-brown;
             letter-spacing: 1px;
             background-color: $coffee;
         }
