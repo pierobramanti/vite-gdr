@@ -98,10 +98,12 @@ export default {
         h1,
         h2 {
             letter-spacing: 2px;
+            text-shadow: 1px 1px 3px black;
         }
-        
+
         .name_color {
-            color: $seal_brown;
+            color: $titles;
+            text-shadow: 1px 1px 3px black;
         }
     }
 
